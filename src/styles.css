@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  background: #fbfaf7;
+  color: #1f2933;
+}
+
+.prose-content p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
