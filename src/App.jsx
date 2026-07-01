@@ -6,6 +6,7 @@ import PostDetailPage from "./pages/PostDetailPage";
 import AboutPage from "./pages/AboutPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import AdminCategoriesPage from "./pages/AdminCategoriesPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import EditPostPage from "./pages/EditPostPage";
 import { getToken } from "./services/api";
@@ -48,6 +49,14 @@ function App() {
           element={
             <ProtectedRoute>
               <EditPostPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/categories"
+          element={
+            <ProtectedRoute>
+              <AdminCategoriesPage />
             </ProtectedRoute>
           }
         />

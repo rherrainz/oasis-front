@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../services/api";
+import CategoryBadge from "../components/CategoryBadge";
+import TagBadge from "../components/TagBadge";
 
 function PostDetailPage() {
   const { slug } = useParams();
@@ -46,9 +48,20 @@ function PostDetailPage() {
         {post.title}
       </h1>
       <div className="mt-4 flex flex-wrap gap-2 text-sm text-slate-500 dark:text-slate-400">
-        <span>{post.author}</span>
+        <Link
+          to={`/blog?author=${encodeURIComponent(post.author?.name || "")}`}
+          className="font-semibold hover:text-primary-light dark:hover:text-primary-dark"
+        >
+          {post.author?.name || "Autor"}
+        </Link>
         <span>·</span>
         <time>{new Date(post.created_at).toLocaleDateString("es-AR")}</time>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        <CategoryBadge category={post.category} />
+        {post.tags?.map((tag) => (
+          <TagBadge key={tag.id} tag={tag} />
+        ))}
       </div>
       <img
         src={post.cover_image_url}

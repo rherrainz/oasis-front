@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { api } from "../services/api";
+import { api, getSession } from "../services/api";
 
 const initialForm = {
   title: "",
@@ -8,17 +8,32 @@ const initialForm = {
   excerpt: "",
   content: "",
   cover_image_url: "",
-  author: "",
+  author_id: "",
+  category_id: "",
+  tags: "",
   published: false
 };
 
 function PostForm({ mode, post }) {
   const navigate = useNavigate();
+  const session = getSession();
+  const isAdmin = session?.role === "admin";
   const [form, setForm] = useState(initialForm);
+  const [categories, setCategories] = useState([]);
+  const [authors, setAuthors] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    Promise.all([api.listAdminCategories(), api.listAdminAuthors()])
+      .then(([categoryData, authorData]) => {
+        setCategories(categoryData);
+        setAuthors(authorData);
+      })
+      .catch((err) => setError(err.message));
+  }, []);
 
   useEffect(() => {
     if (post) {
@@ -28,11 +43,15 @@ function PostForm({ mode, post }) {
         excerpt: post.excerpt,
         content: post.content,
         cover_image_url: post.cover_image_url,
-        author: post.author,
+        author_id: post.author?.id || post.author_id || "",
+        category_id: post.category?.id || post.category_id || "",
+        tags: post.tags?.map((tag) => tag.name).join(", ") || "",
         published: post.published
       });
+    } else if (!isAdmin && session?.userId) {
+      setForm((currentForm) => ({ ...currentForm, author_id: session.userId }));
     }
-  }, [post]);
+  }, [post, isAdmin, session?.userId]);
 
   function updateField(event) {
     const { name, value, type, checked } = event.target;
@@ -65,9 +84,9 @@ function PostForm({ mode, post }) {
 
     try {
       if (mode === "edit") {
-        await api.updatePost(post.id, form);
+        await api.updatePost(post.id, { ...form, author_id: Number(form.author_id), category_id: form.category_id ? Number(form.category_id) : null });
       } else {
-        await api.createPost(form);
+        await api.createPost({ ...form, author_id: Number(form.author_id), category_id: form.category_id ? Number(form.category_id) : null });
       }
 
       navigate("/admin");
@@ -170,16 +189,57 @@ function PostForm({ mode, post }) {
       )}
 
       <div className="grid gap-5 md:grid-cols-2">
+        {isAdmin ? (
+          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+            Autor
+            <select
+              name="author_id"
+              value={form.author_id}
+              onChange={updateField}
+              className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+              required
+            >
+              <option value="">Seleccionar autor</option>
+              {authors.map((author) => (
+                <option key={author.id} value={author.id}>
+                  {author.name} ({author.role})
+                </option>
+              ))}
+            </select>
+          </label>
+        ) : (
+          <input type="hidden" name="author_id" value={form.author_id} />
+        )}
         <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-          Autor
-          <input
-            name="author"
-            value={form.author}
+          Categoría
+          <select
+            name="category_id"
+            value={form.category_id}
             onChange={updateField}
             className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
-            required
-          />
+          >
+            <option value="">Sin categoría</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         </label>
+      </div>
+
+      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+        Tags
+        <input
+          name="tags"
+          value={form.tags}
+          onChange={updateField}
+          className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
+          placeholder="javascript, node, backend, api"
+        />
+      </label>
+
+      <div className="grid gap-5 md:grid-cols-2">
         <label className="flex items-center gap-3 self-end rounded-md border border-slate-200 p-3 text-sm font-medium text-slate-700 dark:border-slate-800 dark:text-slate-300">
           <input
             type="checkbox"

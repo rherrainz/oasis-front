@@ -22,6 +22,9 @@ Consultar también el repositorio backend para ver la API REST, autenticación J
 - Estilos: Tailwind CSS
 - Consumo de API: Fetch API
 - Persistencia de sesión admin: `localStorage`
+- Búsqueda pública: query params con `search`, `category`, `tag` y `author`
+- Organización de posts: categorías, tags y autores
+- Panel admin: filtros de posts y gestión de categorías
 - Variables de entorno: `VITE_API_URL`
 - Gestor de paquetes: npm
 - Hosting frontend: Vercel
@@ -56,6 +59,19 @@ Solo se usa `VITE_API_URL`. No se debe crear `VITE_ADMIN_KEY`, porque toda varia
 - `/admin`: panel administrativo protegido.
 - `/admin/posts/new`: crear post.
 - `/admin/posts/:id/edit`: editar post.
+- `/admin/categories`: gestionar categorías.
+
+## Búsqueda y filtros
+
+La ruta `/blog` acepta filtros en la URL:
+
+- `/blog?search=react`
+- `/blog?category=frontend`
+- `/blog?tag=javascript`
+- `/blog?author=rodrigo`
+- `/blog?search=api&category=backend&tag=node`
+
+El frontend envía esos parámetros al backend y renderiza el resultado. Los tags y categorías de las cards y del detalle son clickeables para volver al listado filtrado.
 
 ## Flujo de administración
 
