@@ -4,11 +4,26 @@
 
 body {
   margin: 0;
-  background: #fbfaf7;
-  color: #1f2933;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.dark body {
+  background: #020617;
+  color: #e5e7eb;
 }
 
 .prose-content p {
   margin-bottom: 1rem;
   line-height: 1.8;
+}
+
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}
+
+.dark *:focus-visible {
+  outline-color: #60a5fa;
 }

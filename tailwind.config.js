@@ -1,16 +1,21 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"]
+        sans: ["Helvetica", "Arial", "sans-serif"]
       },
       colors: {
-        ink: "#1f2933",
-        oasis: "#147c72",
-        coral: "#d95f43",
-        paper: "#fbfaf7"
+        primary: {
+          light: "#2563EB",
+          dark: "#60A5FA"
+        },
+        secondary: {
+          light: "#14B8A6",
+          dark: "#2DD4BF"
+        }
       }
     }
   },

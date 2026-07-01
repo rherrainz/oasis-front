@@ -58,34 +58,46 @@ function AdminDashboardPage() {
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-10">
+    <section className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-ink">Panel de administración</h1>
-          <p className="mt-2 text-slate-600">Gestioná posts y usuarios administradores.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-950 dark:text-slate-100">
+            Panel de administración
+          </h1>
+          <p className="mt-2 text-slate-600 dark:text-slate-300">
+            Gestioná posts y usuarios administradores.
+          </p>
         </div>
         <Link
           to="/admin/posts/new"
-          className="rounded-md bg-oasis px-4 py-2 text-center font-semibold text-white hover:bg-teal-800"
+          className="rounded-md bg-primary-light px-4 py-2 text-center font-semibold text-white transition hover:bg-blue-700 dark:bg-primary-dark dark:text-slate-950 dark:hover:bg-blue-300"
         >
           Crear post
         </Link>
       </div>
 
-      {message && <p className="mb-4 rounded-md bg-emerald-50 p-3 text-sm text-emerald-700">{message}</p>}
-      {error && <p className="mb-4 rounded-md bg-red-50 p-3 text-sm text-red-700">{error}</p>}
+      {message && (
+        <p className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
+          {message}
+        </p>
+      )}
+      {error && (
+        <p className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300">
+          {error}
+        </p>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
-        <div className="rounded-lg border border-slate-200 bg-white">
-          <div className="border-b border-slate-200 p-4">
-            <h2 className="text-lg font-bold text-ink">Posts</h2>
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <div className="border-b border-slate-200 p-4 dark:border-slate-800">
+            <h2 className="text-lg font-bold text-slate-950 dark:text-slate-100">Posts</h2>
           </div>
           {loading ? (
-            <p className="p-4 text-slate-600">Cargando posts...</p>
+            <p className="p-4 text-slate-600 dark:text-slate-300">Cargando posts...</p>
           ) : posts.length === 0 ? (
-            <p className="p-4 text-slate-600">No hay posts creados.</p>
+            <p className="p-4 text-slate-600 dark:text-slate-300">No hay posts creados.</p>
           ) : (
-            <div className="divide-y divide-slate-200">
+            <div className="divide-y divide-slate-200 dark:divide-slate-800">
               {posts.map((post) => (
                 <div key={post.id} className="grid gap-4 p-4 md:grid-cols-[96px_1fr_auto] md:items-center">
                   <img
@@ -95,26 +107,26 @@ function AdminDashboardPage() {
                   />
                   <div>
                     <div className="flex flex-wrap items-center gap-2">
-                      <h3 className="font-bold text-ink">{post.title}</h3>
+                      <h3 className="font-bold text-slate-950 dark:text-slate-100">{post.title}</h3>
                       <span
-                        className={`rounded-full px-2 py-0.5 text-xs font-semibold ${post.published ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}
+                        className={`rounded-full px-2 py-0.5 text-xs font-semibold ${post.published ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300" : "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300"}`}
                       >
                         {post.published ? "Publicado" : "Borrador"}
                       </span>
                     </div>
-                    <p className="mt-1 text-sm text-slate-600">{post.excerpt}</p>
+                    <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{post.excerpt}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <Link
                       to={`/admin/posts/${post.id}/edit`}
-                      className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 hover:border-oasis hover:text-oasis"
+                      className="rounded-md border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-300 dark:hover:border-primary-dark dark:hover:text-primary-dark"
                     >
                       Editar
                     </Link>
                     <button
                       type="button"
                       onClick={() => handleDelete(post.id)}
-                      className="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 hover:bg-red-50"
+                      className="rounded-md border border-red-200 px-3 py-2 text-sm font-semibold text-red-700 transition hover:bg-red-50 dark:border-red-900 dark:text-red-300 dark:hover:bg-red-950/40"
                     >
                       Eliminar
                     </button>
@@ -125,44 +137,47 @@ function AdminDashboardPage() {
           )}
         </div>
 
-        <form onSubmit={handleCreateUser} className="h-fit rounded-lg border border-slate-200 bg-white p-5">
-          <h2 className="text-lg font-bold text-ink">Crear administrador</h2>
+        <form
+          onSubmit={handleCreateUser}
+          className="h-fit rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+        >
+          <h2 className="text-lg font-bold text-slate-950 dark:text-slate-100">Crear administrador</h2>
           <div className="mt-4 space-y-4">
-            <label className="block text-sm font-medium text-slate-700">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
               Nombre
               <input
                 name="name"
                 value={userForm.name}
                 onChange={updateUserField}
-                className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+                className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
                 required
               />
             </label>
-            <label className="block text-sm font-medium text-slate-700">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
               Email
               <input
                 type="email"
                 name="email"
                 value={userForm.email}
                 onChange={updateUserField}
-                className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+                className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
                 required
               />
             </label>
-            <label className="block text-sm font-medium text-slate-700">
+            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
               Contraseña
               <input
                 type="password"
                 name="password"
                 value={userForm.password}
                 onChange={updateUserField}
-                className="mt-1 w-full rounded-md border border-slate-300 px-3 py-2"
+                className="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-950 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-100"
                 required
               />
             </label>
             <button
               type="submit"
-              className="w-full rounded-md bg-coral px-4 py-2 font-semibold text-white hover:bg-orange-700"
+              className="w-full rounded-md bg-secondary-light px-4 py-2 font-semibold text-white transition hover:bg-teal-600 dark:bg-secondary-dark dark:text-slate-950 dark:hover:bg-teal-300"
             >
               Crear usuario
             </button>
