@@ -2,14 +2,31 @@
 
 Frontend React para OasisJS Blogger. Consume una API Express separada y no guarda claves administrativas en el navegador.
 
-Repositorio sugerido: `https://github.com/rherrainz/oasis-front.git`
+## Datos del proyecto
 
-## Tecnologías
+- Autor: Rodrigo Herrainz
+- Universidad / Facultad: Universidad Kennedy
+- Materia: Sistemas Multiplataformas
+- Sistema: OasisJS Blogger
+- Repositorio frontend: `https://github.com/rherrainz/oasis-front.git`
+- Repositorio backend: `https://github.com/rherrainz/oasis-back.git`
 
-- React
-- Vite
-- React Router
-- Tailwind CSS
+Consultar también el repositorio backend para ver la API REST, autenticación JWT, modelo de datos, subida de imágenes y configuración de Railway.
+
+## Tecnologías usadas
+
+- Lenguaje: JavaScript
+- Librería UI: React
+- Build tool: Vite
+- Routing: React Router
+- Estilos: Tailwind CSS
+- Consumo de API: Fetch API
+- Persistencia de sesión admin: `localStorage`
+- Variables de entorno: `VITE_API_URL`
+- Gestor de paquetes: npm
+- Hosting frontend: Vercel
+- Configuración de deploy: `vercel.json`
+- Backend consumido: Node.js + Express + PostgreSQL + Prisma
 
 ## Instalación local
 
