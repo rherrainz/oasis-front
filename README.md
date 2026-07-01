@@ -41,6 +41,14 @@ npm run dev
 
 La aplicación queda disponible en `http://localhost:5173`.
 
+## Tests
+
+```bash
+npm run test:run
+```
+
+La suite usa Vitest, React Testing Library, `@testing-library/jest-dom`, `@testing-library/user-event` y ambiente `jsdom`.
+
 ## Variables de entorno
 
 ```env
