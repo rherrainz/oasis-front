@@ -57,7 +57,6 @@ Solo se usa `VITE_API_URL`. No se debe crear `VITE_ADMIN_KEY`, porque toda varia
 VITE_API_URL=https://tu-api.railway.app/api
 ```
 
-3. Usar `npm run build` como comando de build.
-4. Usar `dist` como directorio de salida.
+3. Vercel usa `vercel.json` para ejecutar `npm run build`, publicar `dist` y resolver rutas de React Router hacia `index.html`.
 
 El backend debe tener `FRONTEND_URL` configurado con el dominio final de Vercel para que CORS permita las peticiones.
