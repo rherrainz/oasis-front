@@ -24,7 +24,7 @@ Consultar también el repositorio backend para ver la API REST, autenticación J
 - Persistencia de sesión admin: `localStorage`
 - Búsqueda pública: query params con `search`, `category`, `tag` y `author`
 - Organización de posts: categorías, tags y autores
-- Panel admin: filtros de posts y gestión de categorías
+- Panel admin: filtros de posts, gestión de categorías y auditoría
 - Variables de entorno: `VITE_API_URL`
 - Gestor de paquetes: npm
 - Hosting frontend: Vercel
@@ -68,6 +68,7 @@ Solo se usa `VITE_API_URL`. No se debe crear `VITE_ADMIN_KEY`, porque toda varia
 - `/admin/posts/new`: crear post.
 - `/admin/posts/:id/edit`: editar post.
 - `/admin/categories`: gestionar categorías.
+- `/admin/audit-logs`: consultar logs de auditoría. Requiere rol `admin`.
 
 ## Búsqueda y filtros
 
@@ -88,6 +89,8 @@ El frontend envía esos parámetros al backend y renderiza el resultado. Los tag
 3. El backend devuelve un JWT.
 4. El frontend guarda el JWT en `localStorage`.
 5. Las peticiones administrativas envían `Authorization: Bearer TOKEN`.
+
+Los administradores también pueden entrar a `/admin/audit-logs` para filtrar eventos por acción, entidad, usuario y rango de fechas.
 
 ## Deploy en Vercel
 
