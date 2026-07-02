@@ -83,6 +83,7 @@ export const api = {
       body: JSON.stringify(payload)
     }),
   listAdminPosts: (params) => request(`/admin/posts${toQueryString(params)}`, { headers: authHeaders() }),
+  listAuditLogs: (params) => request(`/admin/audit-logs${toQueryString(params)}`, { headers: authHeaders() }),
   listAdminCategories: () => request("/admin/categories", { headers: authHeaders() }),
   createCategory: (payload) =>
     request("/admin/categories", {

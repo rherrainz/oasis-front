@@ -101,6 +101,12 @@ function AdminDashboardPage() {
         >
           Categorías
         </Link>
+        <Link
+          to="/admin/audit-logs"
+          className="rounded-md border border-slate-300 px-4 py-2 text-center font-semibold text-slate-700 transition hover:border-primary-light hover:text-primary-light dark:border-slate-700 dark:text-slate-300 dark:hover:border-primary-dark dark:hover:text-primary-dark"
+        >
+          Auditoría
+        </Link>
       </div>
 
       {message && (

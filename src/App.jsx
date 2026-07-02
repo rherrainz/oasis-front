@@ -7,6 +7,7 @@ import AboutPage from "./pages/AboutPage";
 import AdminLoginPage from "./pages/AdminLoginPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import AdminCategoriesPage from "./pages/AdminCategoriesPage";
+import AdminAuditLogsPage from "./pages/AdminAuditLogsPage";
 import CreatePostPage from "./pages/CreatePostPage";
 import EditPostPage from "./pages/EditPostPage";
 import { getToken } from "./services/api";
@@ -57,6 +58,14 @@ function App() {
           element={
             <ProtectedRoute>
               <AdminCategoriesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/audit-logs"
+          element={
+            <ProtectedRoute>
+              <AdminAuditLogsPage />
             </ProtectedRoute>
           }
         />
